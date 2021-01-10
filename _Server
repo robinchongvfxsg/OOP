@@ -1,0 +1,103 @@
+#By Robin Chong updated 10-JAN
+#OOP file that emulate connections operation of a server
+
+import random
+
+class Server:
+    def __init__(self):
+        """Creates a new server instance, with no active connections."""
+        self.connections = {}
+
+
+
+    def add_connection(self, connection_id):
+        """Adds a new connection to this server."""
+        connection_load = random.random()*10+1
+        # Add the connection to the dictionary with the calculated load
+        self.connections[connection_id] = connection_load
+
+        _totalLoad = 0
+        for _load in self.connections.values():
+            _totalLoad+=_load
+        currentLen=str(len(self.connections))
+        # print(_totalLoad)
+        print("--------------------------------------------------------------------------------------")
+        print(f"ADDED   | +{connection_id}+ | Current Connections: {currentLen} | Load Added: +{connection_load:.2f}   | Current Load: {_totalLoad:.2f}" )
+        # print(self.connections,len(self.connections))
+
+
+    def close_connection(self, connection_id):
+        """Closes a connection on this server."""
+        # Remove the connection from the dictionary
+        remove_load = self.connections[connection_id]
+        if connection_id in self.connections:
+            # print(connections_id[connection_load])
+            del self.connections[connection_id]
+
+        _totalLoad = 0
+        for _load in self.connections.values():
+            _totalLoad+=_load
+
+        currentLen=str(len(self.connections))
+
+        print("--------------------------------------------------------------------------------------")
+        print(f"REMOVED | -{connection_id}- | Current Connections: {currentLen} | Load Removed: -{remove_load:.2f} | Current Load: {_totalLoad:.2f}")
+        # print(self.connections)
+        return self.connections
+
+    def load(self):
+        """Calculates the current load for all connections."""
+        self.totalLoad = 0
+        # Add up the load for each of the connections
+        for _load in self.connections.values():
+            self.totalLoad+=_load
+        return self.totalLoad
+
+    def avg_load(self):
+        # _totalLoad = 0
+        # for _load in self.connections.values():
+        #     _totalLoad+=_load
+        currentLen=str(len(self.connections))
+        print("--------------------------------------------------------------------------------------")
+        self.avg = self.totalLoad / float(currentLen)
+
+        print(f"Average load of {currentLen} connections is : {self.avg:.2f}")
+        print("--------------------------------------------------------------------------------------")
+        return self.avg
+
+    def connections_statistics(self):
+        # print(self.connections)
+        currentLen=str(len(self.connections))
+        print("______________________________________________________________________________________")
+        # print("Number of connections: " + str(self.num_connections)+"\nAverage load: " + str(self.avg))
+        print("--------------------------------------------------------------------------------------")
+        print(" ConnectID  |  Load ")
+        print("--------------------")
+        for _connection,_load in self.connections.items():
+            print(f"{_connection} |  {_load:.2f}")
+        print("--------------------------------------------------------------------------------------")
+        print(f"Total load across this server : {self.totalLoad:.2f}")
+        print(f"Connections on this server    : {currentLen}")
+        print("______________________________________________________________________________________")
+
+    def __str__(self):
+        """Returns a string with the current load of the server"""
+        return "{:.2f}%".format(self.load())
+
+#create a server instance "test_server"
+server_test = Server()
+server_test.add_connection("192.168.1.1")
+server_test.add_connection("192.168.2.1")
+server_test.add_connection("192.168.3.1")
+server_test.add_connection("192.168.4.1")
+server_test.load()
+server_test.close_connection("192.168.1.1")
+server_test.add_connection("192.168.7.1")
+server_test.add_connection("192.168.8.1")
+server_test.close_connection("192.168.3.1")
+server_test.connections_statistics()
+server_test.avg_load()
+
+
+
+
