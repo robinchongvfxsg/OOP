@@ -8,14 +8,11 @@ class Server:
         """Creates a new server instance, with no active connections."""
         self.connections = {}
 
-
-
     def add_connection(self, connection_id):
         """Adds a new connection to this server."""
         connection_load = random.random()*10+1
         # Add the connection to the dictionary with the calculated load
         self.connections[connection_id] = connection_load
-
         _totalLoad = 0
         for _load in self.connections.values():
             _totalLoad+=_load
@@ -25,7 +22,6 @@ class Server:
         print(f"ADDED   | +{connection_id}+ | Current Connections: {currentLen} | Load Added: +{connection_load:.2f}   | Current Load: {_totalLoad:.2f}" )
         # print(self.connections,len(self.connections))
 
-
     def close_connection(self, connection_id):
         """Closes a connection on this server."""
         # Remove the connection from the dictionary
@@ -33,13 +29,10 @@ class Server:
         if connection_id in self.connections:
             # print(connections_id[connection_load])
             del self.connections[connection_id]
-
         _totalLoad = 0
         for _load in self.connections.values():
             _totalLoad+=_load
-
         currentLen=str(len(self.connections))
-
         print("--------------------------------------------------------------------------------------")
         print(f"REMOVED | -{connection_id}- | Current Connections: {currentLen} | Load Removed: -{remove_load:.2f} | Current Load: {_totalLoad:.2f}")
         # print(self.connections)
@@ -54,19 +47,16 @@ class Server:
         return self.totalLoad
 
     def avg_load(self):
-        # _totalLoad = 0
-        # for _load in self.connections.values():
-        #     _totalLoad+=_load
+        """Calculate the average load of server across the number of connection"""
         currentLen=str(len(self.connections))
         print("--------------------------------------------------------------------------------------")
         self.avg = self.totalLoad / float(currentLen)
-
         print(f"Average load of {currentLen} connections is : {self.avg:.2f}")
         print("--------------------------------------------------------------------------------------")
         return self.avg
 
     def connections_statistics(self):
-        # print(self.connections)
+        """view all server statistics"""
         currentLen=str(len(self.connections))
         print("______________________________________________________________________________________")
         # print("Number of connections: " + str(self.num_connections)+"\nAverage load: " + str(self.avg))
